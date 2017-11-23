@@ -1,0 +1,167 @@
+body {
+    margin: 0;
+  }
+ .container {
+     width: 100%;
+     height: 100%;
+ } 
+  // HEADER //
+  
+  .header {
+    width: 100%;
+   
+    background-color: #FFED00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+  }
+  
+  .header-text {
+    font-weight: 600;
+    z-index: 1;
+  }
+  
+  .header-logo {
+    display: flex;
+    justify-content: center;
+    align-items:     center;
+    z-index: 1;
+  }
+  
+  .bus-logo {
+    background-color: #88007C;
+    width: 10px;
+    height: 10px;
+    margin-left: 15px;
+    z-index: 1;
+  }
+  
+  .tram-logo {
+    background-color: #E90024;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+    margin-left: 15px;
+    z-index: 1;
+  }
+  
+  .bus-text {
+    padding-left: 5px;
+    z-index: 1;
+        
+  }
+  
+  .tram-text {
+    padding-left: 5px;
+    z-index: 1;
+  }
+  // HAMBURGER //
+
+  .menu {
+    display: flex;
+    justify-content: flex-end;
+    // align-items: center;
+    z-index: 1;
+  }
+  
+  .circle {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+    margin-top: 20px;
+    z-index: 1;
+  }
+  
+  .hamburger, .hamburger:after, .hamburger:before {
+    width: 20px;
+    height: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 3px;
+  }
+  
+  .hamburger {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .hamburger:after {
+    position: absolute;
+    top: 7px;
+    content: '';
+    border-radius: 3px;
+  }
+  
+  .hamburger:before {
+    position: absolute;
+    content: '';
+    top: -7px;
+  }
+  // GOOGLE MAPS //
+  #map {      
+    position:absolute;     
+    z-index: 0;  
+    height:100%;
+    width: 100%;
+     
+  }
+//ARROW//
+  .buttons{
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+
+ 
+
+  }
+  .tram-arrow{
+     background-image: url("../img/tram.png");
+    width: 80%;
+    height: 80%;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-position: center;
+    border-radius: 50%;
+    z-index: 1;
+  }
+  .bus-arrow {  
+    background-image: url("../img/bus.png");
+    width: 80%;
+    height: 80%;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-position: center;
+    border-radius: 50%;
+    z-index: 1
+  }
+  .map-arrow {
+    background-image: url("../img/map.png");
+    width: 80%;
+    height: 80%;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-position: center;
+    border-radius: 50%;
+    z-index: 1
+  }
+  .background-arrow{
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+  }
+  .arrows{
+    display: flex;
+    justify-content: space-between; 
+    z-index: 1;
+}
+  
