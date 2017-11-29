@@ -26,12 +26,14 @@ document.addEventListener('DOMContentLoaded', function(){
         constructor(props) {
             super(props);
             this.state = {
+                // actualLine: "167",
                 center: {
                      lat: this.props.lat,
                      lng: this.props.lng,
                 },
                 linia: [],
                 liniaT: [],
+                
             }
         }
 
@@ -48,28 +50,52 @@ document.addEventListener('DOMContentLoaded', function(){
             });
         }
 
-// PETLE //
+// FETCH //
         componentDidMount() {
             const url = 'https://api.um.warszawa.pl/api/action/busestrams_get/?resource_id=%20f2e5503e-927d-4ad3-9500-4ab9e55deb59&apikey=38529d37-eb98-49ad-99f7-8c3c2716e285&type=1'              
             const urlT = 'https://api.um.warszawa.pl/api/action/busestrams_get/?resource_id=%20f2e5503e-927d-4ad3-9500-4ab9e55deb59&apikey=38529d37-eb98-49ad-99f7-8c3c2716e285&type=2'     
              
-             fetch(url).then(resp => resp.json()).then(resp => {
-                 console.log(resp)
+            // this.timeout = setInterval(() => {
+
+
+                fetch(url).then(resp => resp.json()).then(resp => {
+                    console.log(resp)
+    
+                    let lines = resp.result.map(elem => {
+                        let obj = {
+                            nameLine: elem.Lines,
+                            lat: elem.Lat,
+                            lon: elem.Lon,
+                        }
+                        return obj
+                    })                             
+                        this.setState ({
+                            linia: lines,                
+                    })
+                   
+                })  
+   
+            //  fetch(url).then(resp => resp.json()).then(resp => {
+            //      console.log(resp)
  
-                 let lines = resp.result.map(elem => {
-                     let obj = {
-                         nameLine: elem.Lines,
-                         lat: elem.Lat,
-                         lon: elem.Lon,
-                     }
-                     return obj
-                 })
+            //      let lines = resp.result.map(elem => {
+            //          let obj = {
+            //              nameLine: elem.Lines,
+            //              lat: elem.Lat,
+            //              lon: elem.Lon,
+            //          }
+            //          return obj
+            //      })
+            //      let actualElement = lines.filter(item => {
+            //          return item.nameLine === this.state.actualLine
+            //      })
+            //      console.log("aES",actualElement)
  
-                 this.setState ({
-                     linia: lines                
-                 })
+            //      this.setState ({
+            //          linia: actualElement                
+            //      })
                 
-             })  
+            //  })  
              fetch(urlT).then(resp => resp.json()).then(resp => {
                 console.log(resp)
 
@@ -86,12 +112,20 @@ document.addEventListener('DOMContentLoaded', function(){
                 this.setState ({                   
                     liniaT: linesT, 
                 })
-            })  
+            }) 
+            
+    //   ; }, 25000); 
+
+
         }
 
 // MARKERY //
 
         getBusMarkers = () => {
+
+            
+
+        
             let lines = [];
             
        
@@ -111,16 +145,18 @@ document.addEventListener('DOMContentLoaded', function(){
                     }
 
                     return <Marker
+                    map={map}
                         position={pos}
                         icon={this.busSymbol()}
-                        label={ objStyle} >
+                        label={ objStyle}
+                         >
                     </Marker>
              
                 })
             }
             return lines;
         }
-    
+  
    
  
         getTramMarkers = () => {
@@ -143,9 +179,12 @@ document.addEventListener('DOMContentLoaded', function(){
                     }
 
                     return <Marker
+                        map={map}
                         position={posT}
                         icon={this.tramSymbol()}
-                        label={ objStyleT} >
+                        label={ objStyleT} 
+                        
+                        >
                     </Marker>
              
                 })
@@ -177,33 +216,29 @@ document.addEventListener('DOMContentLoaded', function(){
         }
 // MAP + POINTS RENDER // 
 
-        render() {    
-              let lines = this.getBusMarkers()
-             let linesT = this.getTramMarkers()   
+        render() {  
+            
+            let lines = this.getBusMarkers()
+            let linesT = this.getTramMarkers()   
             const SimpleMapExampleGoogleMap = withGoogleMap( props =>(
+                
                 <GoogleMap
-                  defaultZoom={16}
+                  defaultZoom={14}
                   center={props.center}
-                  defaultOptions={{
-                 
                   
-                    streetViewControl: false,
+                  defaultOptions={{
+                  streetViewControl: false,
                     scaleControl: false,
                     mapTypeControl: false,
                     panControl: false,
                     zoomControl: true,
                     rotateControl: false,
                     fullscreenControl: false
-                  }}
-
-
-
-                //   mapTypeControl= {false} 
-                //   fullscreenControl= {false}
-                //   streetViewControl= {false}           
+                  }}    
                 >                
                 {linesT}
-                {lines}               
+                {lines}  
+                     
                 </GoogleMap>
             ));
      
@@ -215,6 +250,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     mapElement={
                       <div style={{ height: `100vh` }} />
                     }
+                    markers={this.state.linia}
                 />
         }
     }
@@ -244,30 +280,30 @@ document.addEventListener('DOMContentLoaded', function(){
             );
         }
     }
-    class TramButtons extends React.Component {
-        handleClickMap = () => {            
-                console.log("mapa");        
-        }
-        handleClickBus = () => {            
-                console.log("bus");        
-        }
-        render() {
-            return (
-                <div className="buttons">           
-                    <div className="arrows"> 
-                        <div className="background-arrow"> 
-                            <div className="map-arrow" onClick={ this.handleClickMap }>
-                            </div>
-                        </div>            
-                        <div className="background-arrow" onClick={ this.handleClickBus }>  
-                            <div className="bus-arrow">                        
-                            </div>
-                        </div>    
-                    </div>                                 
-                </div>  
-            );
-        }
-    }      
+    // class TramButtons extends React.Component {
+    //     handleClickMap = () => {            
+    //             console.log("mapa");        
+    //     }
+    //     handleClickBus = () => {            
+    //             console.log("bus");        
+    //     }
+    //     render() {
+    //         return (
+    //             <div className="buttons">           
+    //                 <div className="arrows"> 
+    //                     <div className="background-arrow"> 
+    //                         <div className="map-arrow" onClick={ this.handleClickMap }>
+    //                         </div>
+    //                     </div>            
+    //                     <div className="background-arrow" onClick={ this.handleClickBus }>  
+    //                         <div className="bus-arrow">                        
+    //                         </div>
+    //                     </div>    
+    //                 </div>                                 
+    //             </div>  
+    //         );
+    //     }
+    // }      
 
  
     class Hamburger extends React.Component {
